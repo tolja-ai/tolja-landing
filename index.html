@@ -169,10 +169,29 @@
             font-size: 0.8rem;
             color: #444;
             letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.3s;
         }
 
         .footer a:hover {
             color: #aaa;
+        }
+
+        .footer-links {
+            margin-top: 6px;
+        }
+
+        .footer-links a {
+            margin: 0 6px;
+        }
+
+        .footer-links .separator {
+            color: #333;
         }
         
         /* 팝업 스타일 */
@@ -295,15 +314,17 @@
         </div>
     </div>
     
-<div class="footer">
-    <div>2025 © TOLJA INC.</div>
-    <div style="margin-top: 6px;">
-        Contact: <a href="mailto:contact@tolja.ai" style="color:#666; text-decoration:none;">
-            contact@tolja.ai
-        </a>
+    <div class="footer">
+        <div>2025 © TOLJA INC.</div>
+        <div style="margin-top: 6px;">
+            Contact: <a href="mailto:contact@tolja.ai">contact@tolja.ai</a>
+        </div>
+        <div class="footer-links">
+            <a href="/terms">Terms</a>
+            <span class="separator">·</span>
+            <a href="/privacy">Privacy</a>
+        </div>
     </div>
-</div>
-
     
     <!-- 팝업 -->
     <div class="popup-overlay" id="popup">
@@ -357,9 +378,6 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const email = this.querySelector('.email-input').value;
-            
-            // 여기에 실제 이메일 저장 로직 추가 가능
-            // 예: fetch('/api/subscribe', { method: 'POST', body: JSON.stringify({email}) })
             
             // 팝업 표시
             document.getElementById('popup').classList.add('active');
