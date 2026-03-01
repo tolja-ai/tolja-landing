@@ -1,402 +1,201 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TOLJA - Launching Soon</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: #000;
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        
-        .bg-animation {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #000428, #004e92);
-            z-index: -1;
-        }
-        
-        .particles {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: -1;
-        }
-        
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.5);
-            animation: float 20s infinite;
-        }
-        
-        @keyframes float {
-            0% { transform: translateY(100vh) translateX(0); }
-            100% { transform: translateY(-10vh) translateX(100px); }
-        }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 2rem;
-            text-align: center;
-        }
-        
-        .logo {
-            font-size: 6rem;
-            font-weight: 100;
-            letter-spacing: 15px;
-            margin-bottom: 2rem;
-            animation: pulse 4s ease-in-out infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-        
-        .tagline {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 3px;
-            color: #888;
-            margin-bottom: 4rem;
-            text-transform: uppercase;
-        }
-        
-        .glitch {
-            position: relative;
-            font-size: 2rem;
-            font-weight: 300;
-            margin-bottom: 3rem;
-            animation: glitch 2s linear infinite;
-        }
-        
-        @keyframes glitch {
-            0%, 100% { text-shadow: -2px 0 #f0f, 2px 0 #0ff; }
-            50% { text-shadow: 2px 0 #f0f, -2px 0 #0ff; }
-        }
-        
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 3rem;
-            font-size: 0.9rem;
-            color: #666;
-        }
-        
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #0f0;
-            border-radius: 50%;
-            animation: blink 2s infinite;
-        }
-        
-        @keyframes blink {
-            0%, 50%, 100% { opacity: 1; }
-            25%, 75% { opacity: 0.3; }
-        }
-        
-        .email-form {
-            margin-top: 2rem;
-        }
-        
-        .email-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px 30px;
-            font-size: 16px;
-            color: white;
-            border-radius: 50px;
-            width: 350px;
-            max-width: 90vw;
-            margin-bottom: 1rem;
-            transition: all 0.3s;
-        }
-        
-        .email-input:focus {
-            outline: none;
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .email-input::placeholder {
-            color: rgba(255, 255, 255, 0.3);
-        }
-        
-        .submit-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 15px 50px;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .submit-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        .footer {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.8rem;
-            color: #444;
-            letter-spacing: 1px;
-            text-align: center;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TOLJA - Investment Insights Marketplace</title>
 
-        .footer a {
-            color: #666;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      background:#000;
+      color:#fff;
+    }
 
-        .footer a:hover {
-            color: #aaa;
-        }
+    .bg {
+      position:fixed;
+      inset:0;
+      background:linear-gradient(45deg,#000428,#004e92);
+      z-index:-1;
+    }
 
-        .footer-links {
-            margin-top: 6px;
-        }
+    .wrap {
+      max-width:1000px;
+      margin:0 auto;
+      padding:40px 20px 120px;
+    }
 
-        .footer-links a {
-            margin: 0 6px;
-        }
+    .nav {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-bottom:40px;
+    }
 
-        .footer-links .separator {
-            color: #333;
-        }
-        
-        /* 팝업 스타일 */
-        .popup-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            animation: fadeIn 0.3s;
-        }
-        
-        .popup-overlay.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        .popup-content {
-            background: linear-gradient(135deg, #1a1a2e, #16213e);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            max-width: 400px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: slideUp 0.3s;
-        }
-        
-        @keyframes slideUp {
-            from { 
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .popup-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-        }
-        
-        .popup-title {
-            font-size: 1.8rem;
-            font-weight: 300;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-        
-        .popup-message {
-            font-size: 1rem;
-            color: #aaa;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-        
-        .popup-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 12px 40px;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .popup-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-2px);
-        }
-        
-        @media (max-width: 768px) {
-            .logo {
-                font-size: 4rem;
-                letter-spacing: 10px;
-            }
-            .glitch {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+    .brand {
+      font-size:26px;
+      font-weight:200;
+      letter-spacing:10px;
+    }
+
+    .nav a {
+      color:#aaa;
+      text-decoration:none;
+      margin-left:18px;
+      font-size:14px;
+    }
+
+    .nav a:hover { color:#fff; }
+
+    .hero {
+      margin-top:60px;
+      text-align:center;
+    }
+
+    .hero h1 {
+      font-size:34px;
+      font-weight:400;
+      margin-bottom:18px;
+    }
+
+    .hero p {
+      max-width:720px;
+      margin:0 auto 20px;
+      color:#cfcfcf;
+      line-height:1.7;
+      font-size:16px;
+    }
+
+    .cta {
+      margin-top:30px;
+    }
+
+    .btn {
+      display:inline-block;
+      padding:14px 28px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,0.35);
+      background:transparent;
+      color:#fff;
+      text-decoration:none;
+      letter-spacing:2px;
+      font-size:12px;
+      text-transform:uppercase;
+      transition:0.25s;
+    }
+
+    .btn:hover {
+      background:rgba(255,255,255,0.12);
+      border-color:rgba(255,255,255,0.6);
+      transform:translateY(-2px);
+    }
+
+    .section {
+      margin-top:90px;
+      text-align:center;
+    }
+
+    .section h2 {
+      font-size:20px;
+      font-weight:420;
+      margin-bottom:18px;
+    }
+
+    .section p {
+      max-width:720px;
+      margin:0 auto 12px;
+      color:#bdbdbd;
+      line-height:1.6;
+      font-size:15px;
+    }
+
+    .footer {
+      position:fixed;
+      bottom:20px;
+      left:50%;
+      transform:translateX(-50%);
+      text-align:center;
+      font-size:12px;
+      color:#666;
+    }
+
+    .footer a {
+      color:#888;
+      text-decoration:none;
+    }
+
+    .footer a:hover { color:#fff; }
+
+    @media(max-width:768px){
+      .hero h1 { font-size:26px; }
+    }
+
+  </style>
 </head>
+
 <body>
-    <div class="bg-animation"></div>
-    <div class="particles" id="particles"></div>
-    
-    <div class="container">
-        <h1 class="logo">TOLJA</h1>
-        <p class="tagline">Investment Insights Marketplace</p>
-        
-        <div class="glitch">COMING SOON</div>
-        
-        <div class="status">
-            <div class="status-dot"></div>
-            <span>LAUNCHING MARCH 2026</span>
-        </div>
-        
-        <div class="email-form">
-            <form action="#" method="POST">
-                <input type="email" class="email-input" placeholder="Enter your email for launch notification" required>
-                <br>
-                <button type="submit" class="submit-btn">Notify Me at Launch</button>
-            </form>
-        </div>
+<div class="bg"></div>
+
+<div class="wrap">
+
+  <div class="nav">
+    <div class="brand">TOLJA</div>
+    <div>
+      <a href="/verify/">Verify</a>
+      <a href="/terms/">Terms</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
     </div>
-    
-    <div class="footer">
-        <div>2025 © TOLJA INC.</div>
-        <div style="margin-top: 6px;">
-            Contact: <a href="mailto:contact@tolja.ai">contact@tolja.ai</a>
-        </div>
-        <div class="footer-links">
-            <a href="/terms">Terms</a>
-            <span class="separator">·</span>
-            <a href="/privacy">Privacy</a>
-        </div>
+  </div>
+
+  <div class="hero">
+    <h1>Investment Insights Marketplace</h1>
+
+    <p>
+      Tolja is a marketplace platform where users can share and access
+      trading insights and portfolio strategies.
+    </p>
+
+    <p>
+      We use <b>transactional SMS</b> to deliver one-time verification codes (OTP)
+      for account sign-up, login, and password reset.
+      No marketing or promotional SMS messages are sent.
+    </p>
+
+    <div class="cta">
+      <a href="/verify/" class="btn">Verify (Demo)</a>
     </div>
-    
-    <!-- 팝업 -->
-    <div class="popup-overlay" id="popup">
-        <div class="popup-content">
-            <div class="popup-icon">✓</div>
-            <h2 class="popup-title">Successfully Registered!</h2>
-            <p class="popup-message">
-                Your email has been successfully registered.<br>
-                We'll notify you when we launch.<br><br>
-                Thank you!
-            </p>
-            <button class="popup-btn" onclick="closePopup()">Close</button>
-        </div>
-    </div>
-    
-    <script>
-        // 파티클 효과
-        const particlesContainer = document.getElementById('particles');
-        for (let i = 0; i < 50; i++) {
-            const particle = document.createElement('div');
-            particle.className = 'particle';
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() * 20 + 's';
-            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
-            particlesContainer.appendChild(particle);
-        }
-        
-        // 타이핑 효과
-        const messages = [
-            'COMING SOON',
-            'SHARE PORTFOLIOS',
-            'EARN INSIGHTS',
-            'CONNECT TRADERS',
-            'LAUNCH MARCH'
-        ];
-        
-        let messageIndex = 0;
-        const glitchElement = document.querySelector('.glitch');
-        
-        setInterval(() => {
-            messageIndex = (messageIndex + 1) % messages.length;
-            glitchElement.style.opacity = '0';
-            setTimeout(() => {
-                glitchElement.textContent = messages[messageIndex];
-                glitchElement.style.opacity = '1';
-            }, 300);
-        }, 3000);
-        
-        // 이메일 폼 제출
-        const form = document.querySelector('.email-form form');
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('.email-input').value;
-            
-            // 팝업 표시
-            document.getElementById('popup').classList.add('active');
-            
-            // 폼 초기화
-            this.reset();
-        });
-        
-        // 팝업 닫기
-        function closePopup() {
-            document.getElementById('popup').classList.remove('active');
-        }
-        
-        // 팝업 배경 클릭 시 닫기
-        document.getElementById('popup').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePopup();
-            }
-        });
-    </script>
+  </div>
+
+  <div class="section">
+    <h2>How It Works</h2>
+    <p>1. Users create an account and verify their phone number via OTP.</p>
+    <p>2. Insights and portfolio strategies are shared within the platform.</p>
+    <p>3. Access is granted securely after authentication.</p>
+  </div>
+
+  <div class="section">
+    <h2>Security & Compliance</h2>
+    <p>
+      All SMS messages are strictly transactional and sent only in response
+      to explicit user requests for authentication.
+    </p>
+    <p>
+      Users may opt out by replying STOP and receive assistance by replying HELP.
+    </p>
+  </div>
+
+</div>
+
+<div class="footer">
+  2025 © TOLJA INC. ·
+  <a href="/terms/">Terms</a> ·
+  <a href="/privacy/">Privacy</a> ·
+  <a href="/contact/">Contact</a>
+</div>
+
 </body>
 </html>
