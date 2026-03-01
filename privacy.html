@@ -8,118 +8,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-primary: #06080f;
-      --bg-card: rgba(255,255,255,0.03);
-      --border: rgba(255,255,255,0.06);
-      --border-hover: rgba(255,255,255,0.12);
-      --text-primary: #f0f0f5;
-      --text-secondary: #8b8fa3;
-      --text-muted: #5a5e72;
-      --accent: #3b82f6;
-      --accent-glow: rgba(59,130,246,0.15);
-      --gradient-1: linear-gradient(135deg, #3b82f6 0%, #06d6a0 100%);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    .ambient { position: fixed; inset: 0; z-index: -1; }
-    .ambient::before {
-      content: ''; position: absolute;
-      width: 600px; height: 600px; top: -150px; left: -100px;
-      background: radial-gradient(circle, rgba(6,214,160,0.05) 0%, transparent 70%);
-    }
-    .noise {
-      position: fixed; inset: 0; z-index: -1; opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    nav {
-      position: fixed; top:0; left:0; right:0; z-index:100;
-      padding: 20px 0; backdrop-filter: blur(20px);
-      background: rgba(6,8,15,0.7); border-bottom: 1px solid var(--border);
-    }
-    nav .container {
-      max-width: 1120px; margin: 0 auto; padding: 0 24px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 22px; font-weight: 700; letter-spacing: 6px;
-      color: var(--text-primary); text-decoration: none;
-    }
-    .logo span {
-      background: var(--gradient-1);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a {
-      font-size: 13px; font-weight: 500; color: var(--text-secondary);
-      text-decoration: none; letter-spacing: 0.5px; transition: color 0.25s;
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-links .btn-nav {
-      padding: 8px 20px; border: 1px solid var(--border-hover);
-      border-radius: 8px; color: var(--text-primary); transition: all 0.25s;
-    }
-    .nav-links .btn-nav:hover { background: var(--accent-glow); border-color: var(--accent); }
-
-    .page-wrap {
-      max-width: 720px; margin: 0 auto; padding: 140px 24px 80px;
-    }
-    .page-label {
-      font-size: 12px; font-weight: 600; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-    }
-    .page-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px;
-    }
-    .effective-date {
-      font-size: 13px; color: var(--text-muted); margin-bottom: 40px;
-    }
-
-    .legal-content h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 17px; font-weight: 600; color: var(--text-primary);
-      margin-top: 36px; margin-bottom: 12px; letter-spacing: 0.3px;
-    }
-    .legal-content p {
-      font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px;
-    }
-    .legal-content ul {
-      list-style: none; padding: 0; margin-bottom: 14px;
-    }
-    .legal-content ul li {
-      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
-      padding-left: 20px; position: relative;
-    }
-    .legal-content ul li::before {
-      content: '';
-      position: absolute; left: 4px; top: 11px;
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent); opacity: 0.5;
-    }
-    .legal-content a { color: var(--accent); text-decoration: none; }
-    .legal-content a:hover { text-decoration: underline; }
-    .legal-content strong { color: var(--text-primary); font-weight: 500; }
-
-    footer {
-      padding: 48px 24px; text-align: center;
-      border-top: 1px solid var(--border);
-      font-size: 12px; color: var(--text-muted);
-    }
-    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.25s; }
-    footer a:hover { color: var(--text-secondary); }
-
-    @media (max-width: 480px) {
-      .nav-links a:not(.btn-nav) { display: none; }
-    }
+    :root{--bg-primary:#06080f;--bg-card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text-primary:#f0f0f5;--text-secondary:#8b8fa3;--text-muted:#5a5e72;--accent:#3b82f6;--accent-glow:rgba(59,130,246,0.15);--gradient-1:linear-gradient(135deg,#3b82f6 0%,#06d6a0 100%)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .ambient{position:fixed;inset:0;z-index:-1}
+    .ambient::before{content:'';position:absolute;width:600px;height:600px;top:-150px;right:-100px;background:radial-gradient(circle,rgba(6,214,160,0.05) 0%,transparent 70%)}
+    .noise{position:fixed;inset:0;z-index:-1;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;backdrop-filter:blur(20px);background:rgba(6,8,15,0.7);border-bottom:1px solid var(--border)}
+    nav .container{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;letter-spacing:6px;color:var(--text-primary);text-decoration:none}
+    .logo span{background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .nav-links{display:flex;gap:32px;align-items:center}
+    .nav-links a{font-size:13px;font-weight:500;color:var(--text-secondary);text-decoration:none;letter-spacing:0.5px;transition:color 0.25s}
+    .nav-links a:hover{color:var(--text-primary)}
+    .nav-links .btn-nav{padding:8px 20px;border:1px solid var(--border-hover);border-radius:8px;color:var(--text-primary);transition:all 0.25s}
+    .nav-links .btn-nav:hover{background:var(--accent-glow);border-color:var(--accent)}
+    .page-wrap{max-width:720px;margin:0 auto;padding:140px 24px 80px}
+    .page-label{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+    .page-title{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px}
+    .effective-date{font-size:13px;color:var(--text-muted);margin-bottom:40px}
+    .legal-content h2{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;color:var(--text-primary);margin-top:36px;margin-bottom:12px;letter-spacing:0.3px}
+    .legal-content p{font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:14px}
+    .legal-content ul{list-style:none;padding:0;margin-bottom:14px}
+    .legal-content ul li{font-size:14px;color:var(--text-secondary);line-height:1.8;padding-left:20px;position:relative}
+    .legal-content ul li::before{content:'';position:absolute;left:4px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0.5}
+    .legal-content a{color:var(--accent);text-decoration:none}
+    .legal-content a:hover{text-decoration:underline}
+    .legal-content strong{color:var(--text-primary);font-weight:500}
+    footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)}
+    footer a{color:var(--text-muted);text-decoration:none;transition:color 0.25s}
+    footer a:hover{color:var(--text-secondary)}
+    @media(max-width:480px){.nav-links a:not(.btn-nav){display:none}}
   </style>
 </head>
 <body>
@@ -144,50 +63,66 @@
   <p class="effective-date">Effective Date: February 10, 2025</p>
 
   <div class="legal-content">
-    <p>Tolja Inc. ("Tolja," "we," "us," or "our") operates the website <a href="https://tolja.ai">https://tolja.ai</a> and the Tolja mobile application (collectively, the "Service"). This Privacy Policy describes how we collect, use, and protect your personal information when you use our Service.</p>
+    <p>This Privacy Policy describes how Tolja Inc. ("Tolja," "we," "us," or "our") collects, uses, and protects your personal information when you use the website <a href="https://tolja.ai">https://tolja.ai</a> and the Tolja mobile application (collectively, the "Service").</p>
 
     <h2>1. Information We Collect</h2>
-    <p>When you create an account or use the Service, we may collect the following information:</p>
+    <p>We collect information you provide directly to us, including:</p>
     <ul>
-      <li>Email address</li>
-      <li>Phone number</li>
-      <li>Account credentials</li>
-      <li>Usage data and device information</li>
+      <li>Account information: email address, phone number, username</li>
+      <li>Profile information: display name, profile picture</li>
+      <li>Content you post or share on the platform</li>
+      <li>Communications you send to us</li>
     </ul>
 
     <h2>2. How We Use Your Information</h2>
-    <p>We use the information we collect for the following purposes:</p>
+    <p>We use the information we collect to:</p>
     <ul>
-      <li>To provide, maintain, and improve the Service</li>
-      <li>To verify your identity through one-time passcodes (OTP) sent via SMS for account sign-up, login, and password reset</li>
-      <li>To communicate important service-related updates</li>
-      <li>To ensure the security of your account</li>
+      <li>Provide, maintain, and improve the Service</li>
+      <li>Send you transactional SMS messages for account verification (sign-up, login, password reset)</li>
+      <li>Respond to your comments, questions, and requests</li>
+      <li>Monitor and analyze trends, usage, and activities</li>
+      <li>Detect, investigate, and prevent fraudulent transactions and abuse</li>
     </ul>
 
-    <h2>3. SMS/Text Messaging</h2>
-    <p>By providing your phone number during account registration, login, or password reset, you consent to receive transactional SMS messages from Tolja. These messages are limited to one-time verification codes (OTP) for account authentication purposes only.</p>
-    <p>We do not send promotional, marketing, or advertising messages via SMS. Messages are sent only in direct response to a user-initiated action. Message frequency varies based on your use of the Service. Message and data rates may apply.</p>
-    <p>You may opt out of receiving SMS messages at any time by replying STOP to any message. For assistance, reply HELP or contact us at <a href="/cdn-cgi/l/email-protection#2a4945445e4b495e6a5e4546404b044b43"><span class="__cf_email__" data-cfemail="680b07061c090b1c281c07040209460901">[email&#160;protected]</span></a>.</p>
+    <h2>3. SMS/Text Messaging Data</h2>
+    <p>When you provide your phone number for account verification, we collect and store your phone number solely for the purpose of sending transactional SMS messages. We do not use your phone number for marketing or promotional purposes. We do not share your phone number with third parties for their marketing purposes.</p>
+    <p>You may opt out of receiving SMS messages at any time by replying STOP to any message. For assistance, reply HELP or contact us at <span class="eml"></span>.</p>
 
-    <h2>4. Third-Party Service Providers</h2>
-    <p>We use Twilio, Inc. as our third-party SMS delivery provider to send verification messages on our behalf. Your phone number is shared with Twilio solely for the purpose of delivering OTP messages. Twilio's use of your information is governed by their own privacy policy.</p>
-    <p>We do not sell, rent, trade, or otherwise share your personal information, including your phone number, with any other third parties for marketing or promotional purposes.</p>
+    <h2>4. Third-Party Services</h2>
+    <p>We use Twilio, a third-party communications platform, to deliver SMS messages. When we send you an SMS, your phone number is shared with Twilio solely for the purpose of message delivery. Twilio's use of your information is governed by their privacy policy.</p>
 
-    <h2>5. Data Security</h2>
-    <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. Verification codes are temporary and expire within a short timeframe after issuance.</p>
+    <h2>5. Data Retention</h2>
+    <p>We retain your personal information for as long as your account is active or as needed to provide you with the Service. We may also retain certain information as required by law or for legitimate business purposes.</p>
 
-    <h2>6. Data Retention</h2>
-    <p>We retain your personal information only for as long as necessary to fulfill the purposes described in this policy or as required by law. Temporary verification codes are automatically deleted after expiration.</p>
+    <h2>6. Data Security</h2>
+    <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
 
     <h2>7. Your Rights</h2>
-    <p>You have the right to access, correct, or delete your personal information. To exercise these rights, please contact us at <a href="/cdn-cgi/l/email-protection#fa9995948e9b998eba8e9596909bd49b93"><span class="__cf_email__" data-cfemail="1f7c70716b7e7c6b5f6b7073757e317e76">[email&#160;protected]</span></a>.</p>
+    <p>You have the right to access, correct, or delete your personal information. To exercise these rights, please contact us at <span class="eml"></span>.</p>
 
     <h2>8. Children's Privacy</h2>
-    <p>Our Service is not directed to individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have inadvertently collected such information, please contact us and we will promptly delete it.</p>
+    <p>The Service is not intended for children under the age of 18. We do not knowingly collect personal information from children under 18.</p>
 
     <h2>9. Changes to This Policy</h2>
-    <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the updated policy on this page with a revised effective date. Your continued use of the Service after any changes constitutes acceptance of the updated policy.</p>
+    <p>We may update this Privacy Policy from time to time. We will notify you of material changes by posting the updated policy on this page with a revised effective date.</p>
 
     <h2>10. Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us at:</p>
-    <p>Tolja Inc.<br>1111B S Governors Ave STE 48204<br>Dover, DE 1
+    <p>If you have questions about this Privacy Policy, please contact us at:</p>
+    <p>Tolja Inc.<br>1111B S Governors Ave STE 48204<br>Dover, DE 19904, US<br>Email: <span class="eml"></span></p>
+  </div>
+</div>
+
+<footer>
+  © 2025 Tolja Inc. ·
+  <a href="/terms/">Terms</a> ·
+  <a href="/privacy/">Privacy</a> ·
+  <a href="/contact/">Contact</a>
+</footer>
+
+<script>
+(function(){var u='cont'+'act',d='tol'+'ja.ai',e=u+'@'+d;
+document.querySelectorAll('.eml').forEach(function(el){
+var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.color='#3b82f6';a.style.textDecoration='none';el.replaceWith(a);});})();
+</script>
+</body>
+</html>
