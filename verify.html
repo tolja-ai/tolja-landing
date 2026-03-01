@@ -3,94 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>TOLJA - SMS Verification Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background:#000; color:#fff; margin:0; }
-    .wrap { max-width: 780px; margin: 0 auto; padding: 48px 20px; }
-    .nav { display:flex; justify-content:space-between; align-items:center; margin-bottom: 26px; }
-    .nav a { color:#aaa; text-decoration:none; margin-left:14px; }
-    .nav a:hover { color:#fff; }
-    .brand { letter-spacing: 10px; font-weight:200; font-size: 26px; }
-    .card { background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:16px; padding:22px; }
-    h1 { font-weight: 400; font-size: 22px; margin: 0 0 10px 0; }
-    p { color:#b8b8b8; line-height: 1.6; margin: 0 0 14px 0; }
-    .row { display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px; }
-    input { flex:1; min-width:240px; padding:12px 14px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35); color:#fff; }
-    button { padding:12px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.28); background: transparent; color:#fff; letter-spacing: 2px; text-transform: uppercase; cursor:pointer; }
-    button:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.55); }
-    .optin { margin-top: 12px; font-size: 13px; color:#c8c8c8; line-height: 1.5; }
-    .optin strong { color:#fff; font-weight: 600; }
-    .note { margin-top: 10px; font-size: 13px; color:#9c9c9c; }
-    .footer { margin-top: 28px; font-size: 12px; color:#666; }
-    .footer a { color:#8b8b8b; text-decoration:none; }
-    .footer a:hover { color:#fff; }
-    .toast { display:none; margin-top: 14px; padding:12px 14px; border-radius: 12px; border:1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.35); color:#ddd; }
-    .toast.show { display:block; }
+    :root {
+      --bg-primary: #06080f;
+      --bg-secondary: #0c1120;
+      --bg-card: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+      --text-primary: #f0f0f5;
+      --text-secondary: #8b8fa3;
+      --text-muted: #5a5e72;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59,130,246,0.15);
+      --accent-secondary: #06d6a0;
+      --gradient-1: linear-gradient(135deg, #3b82f6 0%, #06d6a0 100%);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient {
+      position: fixed; inset: 0; z-index: -1;
+    }
+    .ambient::before {
+      content: ''; position: absolute;
+      width: 600px; height: 600px; top: -150px; right: -100px;
+      background: radial-gradient(circle, rgba(59,130,246,0.07) 0%, transparent 70%);
+      animation: drift 20s ease-in-out infinite;
+    }
+    @keyframes drift {
+      0%, 100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(-40px, 30px) scale(1.1); }
+    }
+    .noise {
+      position: fixed; inset: 0; z-index: -1; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      padding: 20px 0;
+      backdrop-filter: blur(20px);
+      background: rgba(6,8,15,0.7);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      max-width: 1120px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px; font-weight: 700; letter-spacing: 6px;
+      color: var(--text-primary); text-decoration: none;
+    }
+    .logo span {
+      background: var(--gradient-1);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; letter-spacing: 0.5px; transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links .btn-nav {
+      padding: 8px 20px; border: 1px solid var(--accent);
+      border-radius: 8px; color: var(--accent); font-size: 13px; transition: all 0.25s;
+    }
+    .nav-links .btn-nav:hover {
+      background: var(--accent-glow);
+    }
+
+    .page-wrap {
+      max-width: 640px; margin: 0 auto; padding: 140px 24px 80px;
+    }
+    .page-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 12px;
+    }
+    .page-desc {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 40px;
+    }
+
+    .verify-card {
+      padding: 36px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      position: relative; overflow: hidden;
+    }
+    .verify-card::before {
+      content: ''; position: absolute; top:0; left:0; right:0; height: 2px;
+      background: var(--gradient-1);
+    }
+    .field-row {
+      display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px;
+    }
+    .field-row input {
+      flex: 1; min-width: 220px;
+      padding: 14px 16px; border-radius: 10px;
+      border: 1px solid var(--border-hover);
+      background: rgba(0,0,0,0.3); color: #fff;
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      transition: border-color 0.25s;
+    }
+    .field-row input:focus {
+      outline: none; border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .field-row input::placeholder { color: var(--text-muted); }
+    .btn-send {
+      padding: 14px 24px; border-radius: 10px; border: none;
+      background: var(--accent); color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px; font-weight: 600; letter-spacing: 1px;
+      text-transform: uppercase; cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 16px rgba(59,130,246,0.25);
+    }
+    .btn-send:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(59,130,246,0.35);
+    }
+
+    .optin-text {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.65;
+      padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .optin-text strong { color: var(--text-primary); font-weight: 600; }
+
+    .support-line {
+      margin-top: 16px; font-size: 13px; color: var(--text-muted);
+    }
+    .support-line a { color: var(--accent); text-decoration: none; }
+    .support-line a:hover { text-decoration: underline; }
+
+    .toast {
+      display: none; margin-top: 20px;
+      padding: 16px; border-radius: 12px;
+      background: rgba(59,130,246,0.08);
+      border: 1px solid rgba(59,130,246,0.2);
+      font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    }
+    .toast.show { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+    footer {
+      padding: 48px 24px; text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-muted);
+    }
+    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.25s; }
+    footer a:hover { color: var(--text-secondary); }
+
+    @media (max-width: 480px) {
+      .nav-links a:not(.btn-nav) { display: none; }
+      .verify-card { padding: 24px; }
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">TOLJA</div>
-      <div>
-        <a href="/">Home</a>
-        <a href="/terms">Terms</a>
-        <a href="/privacy">Privacy</a>
-        <a href="/contact">Contact</a>
-      </div>
-    </div>
+<div class="ambient"></div>
+<div class="noise"></div>
 
-    <div class="card">
-      <h1>SMS Verification (OTP) Demo</h1>
-      <p>
-        Tolja uses <b>transactional SMS</b> to deliver one-time verification codes (OTP) for
-        account sign-up, login, and password reset. We do not send marketing or promotional SMS.
-      </p>
-
-      <div class="row">
-        <input id="phone" type="tel" placeholder="Phone number (e.g., +1 555 123 4567)" autocomplete="tel" />
-        <button id="btn" type="button">Send Code</button>
-      </div>
-
-      <div class="optin">
-        By entering your phone number and requesting a verification code, you consent to receive a
-        <strong>one-time SMS</strong> from Tolja for account authentication.
-        Message &amp; data rates may apply. Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for help.
-      </div>
-
-      <div class="note">
-        Support: <a href="mailto:contact@tolja.ai">contact@tolja.ai</a>
-      </div>
-
-      <div class="toast" id="toast"></div>
-    </div>
-
-    <div class="footer">
-      2025 © TOLJA INC. ·
-      <a href="/terms">Terms</a> ·
-      <a href="/privacy">Privacy</a>
+<nav>
+  <div class="container">
+    <a href="/" class="logo">TOL<span>JA</span></a>
+    <div class="nav-links">
+      <a href="/terms/">Terms</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/verify/" class="btn-nav">Verify Demo</a>
     </div>
   </div>
+</nav>
 
-  <script>
-    const btn = document.getElementById('btn');
-    const phone = document.getElementById('phone');
-    const toast = document.getElementById('toast');
+<div class="page-wrap">
+  <div class="page-label">Authentication</div>
+  <h1 class="page-title">SMS Verification Demo</h1>
+  <p class="page-desc">
+    Tolja uses <strong>transactional SMS</strong> to deliver one-time verification codes (OTP)
+    for sign-up, login, and password reset. We do not send marketing or promotional SMS.
+  </p>
 
-    btn.addEventListener('click', () => {
-      const v = phone.value.trim();
-      if (!v) {
-        toast.textContent = 'Please enter your phone number to request a verification code.';
-        toast.classList.add('show');
-        return;
-      }
-      // 심사용: 실제 전송이 목적이 아님. UI/consent 흐름 확인용.
-      toast.innerHTML =
-        'Request recorded. During testing, OTP verification is completed within the Tolja app.<br><br>' +
-        'Reply STOP to opt out. Reply HELP for help.';
+  <div class="verify-card">
+    <div class="field-row">
+      <input id="phone" type="tel" placeholder="Phone number (e.g., +1 555 123 4567)" autocomplete="tel" inputmode="tel" />
+      <button class="btn-send" id="btn" type="button">Send Code</button>
+    </div>
+
+    <div class="optin-text">
+      By entering your phone number and requesting a verification code, you consent to receive a
+      <strong>one-time SMS</strong> from Tolja for account authentication.
+      Message &amp; data rates may apply. Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for help.
+    </div>
+
+    <div class="support-line">
+      Support: <a href="mailto:contact@tolja.ai">contact@tolja.ai</a>
+    </div>
+
+    <div class="toast" id="toast"></div>
+  </div>
+</div>
+
+<footer>
+  © 2025 Tolja Inc. ·
+  <a href="/terms/">Terms</a> ·
+  <a href="/privacy/">Privacy</a> ·
+  <a href="/contact/">Contact</a>
+</footer>
+
+<script>
+  const btn = document.getElementById('btn');
+  const phone = document.getElementById('phone');
+  const toast = document.getElementById('toast');
+  btn.addEventListener('click', () => {
+    const v = phone.value.trim();
+    if (!v) {
+      toast.textContent = 'Please enter your phone number to request a verification code.';
       toast.classList.add('show');
-    });
-  </script>
+      return;
+    }
+    toast.innerHTML =
+      'Request recorded. During testing, OTP verification is completed within the Tolja app.<br><br>' +
+      'Reply STOP to opt out. Reply HELP for help.';
+    toast.classList.add('show');
+  });
+</script>
 </body>
 </html>
