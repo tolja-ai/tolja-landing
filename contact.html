@@ -3,40 +3,218 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TOLJA - Contact</title>
-  
+  <title>Contact - TOLJA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
   <style>
-    body { margin:0; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; background:#000; color:#fff; }
-    .bg { position:fixed; inset:0; background:linear-gradient(45deg,#000428,#004e92); z-index:-1; }
-    .wrap { max-width:860px; margin:0 auto; padding:44px 18px 80px; }
-    a { color:#c0c0c0; text-decoration:none; } a:hover { color:#fff; }
-    .nav { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:22px; }
-    .brand { font-size:26px; font-weight:200; letter-spacing:10px; }
-    .card { background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:18px; padding:22px; }
-    h1 { margin:0 0 10px; font-weight:420; font-size:22px; }
-    p { margin:0 0 12px; color:#cfcfcf; line-height:1.6; }
-    .muted { color:#9a9a9a; font-size:13px; }
+    :root {
+      --bg-primary: #06080f;
+      --bg-card: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.06);
+      --border-hover: rgba(255,255,255,0.12);
+      --text-primary: #f0f0f5;
+      --text-secondary: #8b8fa3;
+      --text-muted: #5a5e72;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59,130,246,0.15);
+      --accent-secondary: #06d6a0;
+      --gradient-1: linear-gradient(135deg, #3b82f6 0%, #06d6a0 100%);
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .ambient { position: fixed; inset: 0; z-index: -1; }
+    .ambient::before {
+      content: ''; position: absolute;
+      width: 500px; height: 500px; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
+    }
+    .noise {
+      position: fixed; inset: 0; z-index: -1; opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      padding: 20px 0; backdrop-filter: blur(20px);
+      background: rgba(6,8,15,0.7); border-bottom: 1px solid var(--border);
+    }
+    nav .container {
+      max-width: 1120px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px; font-weight: 700; letter-spacing: 6px;
+      color: var(--text-primary); text-decoration: none;
+    }
+    .logo span {
+      background: var(--gradient-1);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      font-size: 13px; font-weight: 500; color: var(--text-secondary);
+      text-decoration: none; letter-spacing: 0.5px; transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-links .btn-nav {
+      padding: 8px 20px; border: 1px solid var(--border-hover);
+      border-radius: 8px; color: var(--text-primary); transition: all 0.25s;
+    }
+    .nav-links .btn-nav:hover { background: var(--accent-glow); border-color: var(--accent); }
+
+    .page-wrap {
+      max-width: 640px; margin: 0 auto; padding: 160px 24px 80px;
+    }
+    .page-label {
+      font-size: 12px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+      text-align: center;
+    }
+    .page-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 12px;
+      text-align: center;
+    }
+    .page-desc {
+      font-size: 15px; color: var(--text-secondary); line-height: 1.7;
+      margin-bottom: 48px; text-align: center;
+    }
+
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+    }
+    .contact-card {
+      padding: 32px 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      transition: all 0.3s;
+      text-align: center;
+    }
+    .contact-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+    .contact-card .icon {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      background: var(--accent-glow);
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .contact-card .icon svg {
+      width: 20px; height: 20px; stroke: var(--accent); fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .contact-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px; font-weight: 600; margin-bottom: 6px;
+    }
+    .contact-card p {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.6;
+    }
+    .contact-card a {
+      color: var(--accent); text-decoration: none;
+    }
+    .contact-card a:hover { text-decoration: underline; }
+
+    .sms-help {
+      margin-top: 40px; padding: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px; text-align: center;
+    }
+    .sms-help h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px; font-weight: 600; margin-bottom: 10px;
+    }
+    .sms-help p {
+      font-size: 13px; color: var(--text-secondary); line-height: 1.7;
+    }
+    .sms-help strong { color: var(--text-primary); font-weight: 600; }
+
+    footer {
+      padding: 48px 24px; text-align: center;
+      border-top: 1px solid var(--border);
+      font-size: 12px; color: var(--text-muted);
+      margin-top: 60px;
+    }
+    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.25s; }
+    footer a:hover { color: var(--text-secondary); }
+
+    @media (max-width: 560px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      .nav-links a:not(.btn-nav) { display: none; }
+    }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
-  <div class="wrap">
-    <div class="nav">
-      <div class="brand">TOLJA</div>
-      <div>
-        <a href="/">Home</a>
-        <a href="/verify/">Verify</a>
-        <a href="/terms/">Terms</a>
-        <a href="/privacy/">Privacy</a>
-      </div>
-    </div>
+<div class="ambient"></div>
+<div class="noise"></div>
 
-    <div class="card">
-      <h1>Contact</h1>
-      <p>Email: <a href="mailto:contact@tolja.ai">contact@tolja.ai</a></p>
-      <p class="muted">We typically respond within 1–2 business days.</p>
-      <p class="muted">Tolja Inc. · 1111B S Governors Ave STE 48204 · Dover, DE 19904, US</p>
+<nav>
+  <div class="container">
+    <a href="/" class="logo">TOL<span>JA</span></a>
+    <div class="nav-links">
+      <a href="/terms/">Terms</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/contact/">Contact</a>
+      <a href="/verify/" class="btn-nav">Verify Demo →</a>
     </div>
   </div>
+</nav>
+
+<div class="page-wrap">
+  <div class="page-label">Support</div>
+  <h1 class="page-title">Contact Us</h1>
+  <p class="page-desc">
+    Have questions about SMS verification, account access, or general inquiries?
+    We're here to help.
+  </p>
+
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <h3>Email</h3>
+      <p><a href="mailto:contact@tolja.ai">contact@tolja.ai</a></p>
+      <p style="margin-top:6px; font-size:12px; color:var(--text-muted);">We typically respond within 1–2 business days.</p>
+    </div>
+
+    <div class="contact-card">
+      <div class="icon">
+        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <h3>Address</h3>
+      <p>Tolja Inc.<br>1111B S Governors Ave<br>STE 48204<br>Dover, DE 19904, US</p>
+    </div>
+  </div>
+
+  <div class="sms-help">
+    <h3>SMS Help</h3>
+    <p>
+      For SMS opt-out, reply <strong>STOP</strong> to any message.<br>
+      For SMS help, reply <strong>HELP</strong> to any message.<br>
+      Or contact us at <a href="mailto:contact@tolja.ai" style="color:var(--accent); text-decoration:none;">contact@tolja.ai</a>
+    </p>
+  </div>
+</div>
+
+<footer>
+  © 2025 Tolja Inc. ·
+  <a href="/terms/">Terms</a> ·
+  <a href="/privacy/">Privacy</a> ·
+  <a href="/contact/">Contact</a>
+</footer>
 </body>
 </html>
