@@ -8,118 +8,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-primary: #06080f;
-      --bg-card: rgba(255,255,255,0.03);
-      --border: rgba(255,255,255,0.06);
-      --border-hover: rgba(255,255,255,0.12);
-      --text-primary: #f0f0f5;
-      --text-secondary: #8b8fa3;
-      --text-muted: #5a5e72;
-      --accent: #3b82f6;
-      --accent-glow: rgba(59,130,246,0.15);
-      --gradient-1: linear-gradient(135deg, #3b82f6 0%, #06d6a0 100%);
-    }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-    .ambient { position: fixed; inset: 0; z-index: -1; }
-    .ambient::before {
-      content: ''; position: absolute;
-      width: 600px; height: 600px; top: -150px; left: -100px;
-      background: radial-gradient(circle, rgba(59,130,246,0.05) 0%, transparent 70%);
-    }
-    .noise {
-      position: fixed; inset: 0; z-index: -1; opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    }
-
-    nav {
-      position: fixed; top:0; left:0; right:0; z-index:100;
-      padding: 20px 0; backdrop-filter: blur(20px);
-      background: rgba(6,8,15,0.7); border-bottom: 1px solid var(--border);
-    }
-    nav .container {
-      max-width: 1120px; margin: 0 auto; padding: 0 24px;
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    .logo {
-      font-family: 'Syne', sans-serif;
-      font-size: 22px; font-weight: 700; letter-spacing: 6px;
-      color: var(--text-primary); text-decoration: none;
-    }
-    .logo span {
-      background: var(--gradient-1);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .nav-links { display: flex; gap: 32px; align-items: center; }
-    .nav-links a {
-      font-size: 13px; font-weight: 500; color: var(--text-secondary);
-      text-decoration: none; letter-spacing: 0.5px; transition: color 0.25s;
-    }
-    .nav-links a:hover { color: var(--text-primary); }
-    .nav-links .btn-nav {
-      padding: 8px 20px; border: 1px solid var(--border-hover);
-      border-radius: 8px; color: var(--text-primary); transition: all 0.25s;
-    }
-    .nav-links .btn-nav:hover { background: var(--accent-glow); border-color: var(--accent); }
-
-    .page-wrap {
-      max-width: 720px; margin: 0 auto; padding: 140px 24px 80px;
-    }
-    .page-label {
-      font-size: 12px; font-weight: 600; letter-spacing: 3px;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
-    }
-    .page-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px;
-    }
-    .effective-date {
-      font-size: 13px; color: var(--text-muted); margin-bottom: 40px;
-    }
-
-    .legal-content h2 {
-      font-family: 'Syne', sans-serif;
-      font-size: 17px; font-weight: 600; color: var(--text-primary);
-      margin-top: 36px; margin-bottom: 12px; letter-spacing: 0.3px;
-    }
-    .legal-content p {
-      font-size: 14px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 14px;
-    }
-    .legal-content ul {
-      list-style: none; padding: 0; margin-bottom: 14px;
-    }
-    .legal-content ul li {
-      font-size: 14px; color: var(--text-secondary); line-height: 1.8;
-      padding-left: 20px; position: relative;
-    }
-    .legal-content ul li::before {
-      content: '';
-      position: absolute; left: 4px; top: 11px;
-      width: 5px; height: 5px; border-radius: 50%;
-      background: var(--accent); opacity: 0.5;
-    }
-    .legal-content a { color: var(--accent); text-decoration: none; }
-    .legal-content a:hover { text-decoration: underline; }
-    .legal-content strong { color: var(--text-primary); font-weight: 500; }
-
-    footer {
-      padding: 48px 24px; text-align: center;
-      border-top: 1px solid var(--border);
-      font-size: 12px; color: var(--text-muted);
-    }
-    footer a { color: var(--text-muted); text-decoration: none; transition: color 0.25s; }
-    footer a:hover { color: var(--text-secondary); }
-
-    @media (max-width: 480px) {
-      .nav-links a:not(.btn-nav) { display: none; }
-    }
+    :root{--bg-primary:#06080f;--bg-card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text-primary:#f0f0f5;--text-secondary:#8b8fa3;--text-muted:#5a5e72;--accent:#3b82f6;--accent-glow:rgba(59,130,246,0.15);--gradient-1:linear-gradient(135deg,#3b82f6 0%,#06d6a0 100%)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
+    .ambient{position:fixed;inset:0;z-index:-1}
+    .ambient::before{content:'';position:absolute;width:600px;height:600px;top:-150px;left:-100px;background:radial-gradient(circle,rgba(59,130,246,0.05) 0%,transparent 70%)}
+    .noise{position:fixed;inset:0;z-index:-1;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 0;backdrop-filter:blur(20px);background:rgba(6,8,15,0.7);border-bottom:1px solid var(--border)}
+    nav .container{max-width:1120px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
+    .logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;letter-spacing:6px;color:var(--text-primary);text-decoration:none}
+    .logo span{background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .nav-links{display:flex;gap:32px;align-items:center}
+    .nav-links a{font-size:13px;font-weight:500;color:var(--text-secondary);text-decoration:none;letter-spacing:0.5px;transition:color 0.25s}
+    .nav-links a:hover{color:var(--text-primary)}
+    .nav-links .btn-nav{padding:8px 20px;border:1px solid var(--border-hover);border-radius:8px;color:var(--text-primary);transition:all 0.25s}
+    .nav-links .btn-nav:hover{background:var(--accent-glow);border-color:var(--accent)}
+    .page-wrap{max-width:720px;margin:0 auto;padding:140px 24px 80px}
+    .page-label{font-size:12px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+    .page-title{font-family:'Syne',sans-serif;font-size:32px;font-weight:700;letter-spacing:-0.5px;margin-bottom:8px}
+    .effective-date{font-size:13px;color:var(--text-muted);margin-bottom:40px}
+    .legal-content h2{font-family:'Syne',sans-serif;font-size:17px;font-weight:600;color:var(--text-primary);margin-top:36px;margin-bottom:12px;letter-spacing:0.3px}
+    .legal-content p{font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:14px}
+    .legal-content ul{list-style:none;padding:0;margin-bottom:14px}
+    .legal-content ul li{font-size:14px;color:var(--text-secondary);line-height:1.8;padding-left:20px;position:relative}
+    .legal-content ul li::before{content:'';position:absolute;left:4px;top:11px;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:0.5}
+    .legal-content a{color:var(--accent);text-decoration:none}
+    .legal-content a:hover{text-decoration:underline}
+    .legal-content strong{color:var(--text-primary);font-weight:500}
+    footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)}
+    footer a{color:var(--text-muted);text-decoration:none;transition:color 0.25s}
+    footer a:hover{color:var(--text-secondary)}
+    @media(max-width:480px){.nav-links a:not(.btn-nav){display:none}}
   </style>
 </head>
 <body>
@@ -162,7 +81,7 @@
     <p>Messages are sent only in response to user-initiated actions. We do not send recurring, promotional, or marketing messages via SMS. Message and data rates may apply depending on your mobile carrier and plan.</p>
     <p><strong>Message Frequency:</strong> One-time messages per user-initiated request (e.g., sign-up, login, password reset). Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help.</p>
     <p><strong>Opt-Out:</strong> You may opt out of receiving SMS messages at any time by replying STOP to any message you receive from us. After opting out, you will no longer receive SMS verification codes and may need to use alternative authentication methods.</p>
-    <p><strong>Help:</strong> For assistance with SMS messages, reply HELP to any message or contact us at <a href="/cdn-cgi/l/email-protection#9dfef2f3e9fcfee9dde9f2f1f7fcb3fcf4"><span class="__cf_email__" data-cfemail="37545859435654437743585b5d5619565e">[email&#160;protected]</span></a>.</p>
+    <p><strong>Help:</strong> For assistance with SMS messages, reply HELP to any message or contact us at <span class="eml"></span>.</p>
     <p><strong>Supported Carriers:</strong> Major US carriers are supported. Tolja is not responsible for delayed or undelivered messages caused by carrier issues.</p>
     <p>We support standard STOP and HELP keywords for SMS compliance in accordance with CTIA guidelines.</p>
 
@@ -189,4 +108,21 @@
 
     <h2>11. Contact Us</h2>
     <p>If you have any questions about these Terms, please contact us at:</p>
-    <p>Tolja Inc.<br>1111B S Governors Ave STE 48204<br>Dover, DE 19904, US<br>Email: <a href="/cdn-cgi/l/email-protection#96f5f9f8e2f7f5e2d6e2f9fafcf7b8f7ff"><span class="__cf_email__" data-cfema
+    <p>Tolja Inc.<br>1111B S Governors Ave STE 48204<br>Dover, DE 19904, US<br>Email: <span class="eml"></span></p>
+  </div>
+</div>
+
+<footer>
+  © 2025 Tolja Inc. ·
+  <a href="/terms/">Terms</a> ·
+  <a href="/privacy/">Privacy</a> ·
+  <a href="/contact/">Contact</a>
+</footer>
+
+<script>
+(function(){var u='cont'+'act',d='tol'+'ja.ai',e=u+'@'+d;
+document.querySelectorAll('.eml').forEach(function(el){
+var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.color='#3b82f6';a.style.textDecoration='none';el.replaceWith(a);});})();
+</script>
+</body>
+</html>
