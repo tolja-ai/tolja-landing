@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
   <style>
-    :root{--bg-primary:#06080f;--bg-card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text-primary:#f0f0f5;--text-secondary:#8b8fa3;--text-muted:#5a5e72;--accent:#3b82f6;--accent-glow:rgba(59,130,246,0.15);--gradient-1:linear-gradient(135deg,#3b82f6 0%,#06d6a0 100%)}
+    :root{--bg-primary:#06080f;--bg-card:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.06);--border-hover:rgba(255,255,255,0.12);--text-primary:#f0f0f5;--text-secondary:#8b8fa3;--text-muted:#5a5e72;--accent:#3b82f6;--accent-glow:rgba(59,130,246,0.15);--gradient-1:linear-gradient(135deg,#3b82f6 0%,#06d6a0 100%);--success:#10b981;--error:#ef4444}
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:'DM Sans',sans-serif;background:var(--bg-primary);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
     .ambient{position:fixed;inset:0;z-index:-1}
@@ -35,18 +35,31 @@
     .field-row input{flex:1;min-width:220px;padding:14px 16px;border-radius:10px;border:1px solid var(--border-hover);background:rgba(0,0,0,0.3);color:#fff;font-family:'DM Sans',sans-serif;font-size:14px;transition:border-color 0.25s}
     .field-row input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}
     .field-row input::placeholder{color:var(--text-muted)}
-    .btn-send{padding:14px 24px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 16px rgba(59,130,246,0.25)}
-    .btn-send:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(59,130,246,0.35)}
+    .btn-send{padding:14px 24px;border-radius:10px;border:none;background:var(--accent);color:#fff;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all 0.3s;box-shadow:0 4px 16px rgba(59,130,246,0.25);white-space:nowrap}
+    .btn-send:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 24px rgba(59,130,246,0.35)}
+    .btn-send:disabled{cursor:not-allowed;opacity:0.6}
     .optin-text{font-size:13px;color:var(--text-secondary);line-height:1.65;padding-top:20px;border-top:1px solid var(--border)}
     .optin-text strong{color:var(--text-primary);font-weight:600}
     .support-line{margin-top:16px;font-size:13px;color:var(--text-muted)}
-    .toast{display:none;margin-top:20px;padding:16px;border-radius:12px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);font-size:13px;color:var(--text-secondary);line-height:1.6}
+    .toast{display:none;margin-top:20px;padding:16px;border-radius:12px;font-size:13px;line-height:1.6}
     .toast.show{display:block;animation:fadeIn 0.3s ease}
+    .toast.info{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);color:var(--text-secondary)}
+    .toast.error{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#fca5a5}
+    .toast.success{background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);color:#6ee7b7}
+    .step-info{font-size:14px;color:var(--text-secondary);margin-bottom:16px}
+    .step-info strong{color:var(--text-primary)}
+    .resend-line{margin-top:12px;font-size:13px;color:var(--text-muted)}
+    .resend-line a{color:var(--accent);text-decoration:none;cursor:pointer}
+    .resend-line a:hover{text-decoration:underline}
+    .resend-line a.disabled{color:var(--text-muted);pointer-events:none}
+    .success-icon{font-size:48px;margin-bottom:16px}
+    .success-title{font-size:18px;font-weight:600;color:var(--success);margin-bottom:8px}
+    .success-desc{font-size:14px;color:var(--text-secondary)}
     @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     footer{padding:48px 24px;text-align:center;border-top:1px solid var(--border);font-size:12px;color:var(--text-muted)}
     footer a{color:var(--text-muted);text-decoration:none;transition:color 0.25s}
     footer a:hover{color:var(--text-secondary)}
-    @media(max-width:480px){.nav-links a:not(.btn-nav){display:none}.verify-card{padding:24px}}
+    @media(max-width:480px){.nav-links a:not(.btn-nav){display:none}.verify-card{padding:24px}.field-row{flex-direction:column}.btn-send{width:100%}}
   </style>
 </head>
 <body>
@@ -72,10 +85,31 @@
   <p class="page-sub">Tolja Inc. provides SMS OTP for account authentication only.</p>
 
   <div class="verify-card">
-    <div class="field-row">
-      <input id="phone" type="tel" placeholder="Phone number (e.g., +1 555 123 4567)" autocomplete="tel" inputmode="tel" />
-      <button class="btn-send" id="btn" type="button">Send Code</button>
+    <!-- Step 1: Phone number input -->
+    <div id="step1">
+      <div class="field-row">
+        <input id="phone" type="tel" placeholder="Phone number (e.g., +1 555 123 4567)" autocomplete="tel" inputmode="tel" />
+        <button class="btn-send" id="btn-send" type="button">Send Code</button>
+      </div>
     </div>
+
+    <!-- Step 2: Code input -->
+    <div id="step2" style="display:none;">
+      <p class="step-info">A verification code has been sent to <strong id="sent-phone"></strong></p>
+      <div class="field-row">
+        <input id="code" type="text" placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
+        <button class="btn-send" id="btn-verify" type="button">Verify</button>
+      </div>
+      <p class="resend-line">Didn't receive it? <a href="#" id="btn-resend">Resend code</a> · <a href="#" id="btn-change">Change number</a></p>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div id="step3" style="display:none;">
+      <div class="success-icon">&#10003;</div>
+      <p class="success-title">Phone number verified successfully</p>
+      <p class="success-desc">You can now proceed with sign-up in the Tolja app.</p>
+    </div>
+
     <div class="optin-text">
       By entering your phone number and requesting a verification code, you consent to receive a
       <strong>one-time SMS</strong> from Tolja for account authentication.
@@ -87,46 +121,143 @@
 </div>
 
 <footer>
-  © 2025 Tolja Inc. ·
-  <a href="/terms/">Terms</a> ·
-  <a href="/privacy/">Privacy</a> ·
+  &copy; 2025 Tolja Inc. &middot;
+  <a href="/terms/">Terms</a> &middot;
+  <a href="/privacy/">Privacy</a> &middot;
   <a href="/contact/">Contact</a>
 </footer>
 
+<!-- Email obfuscation -->
 <script>
 (function(){var u='cont'+'act',d='tol'+'ja.ai',e=u+'@'+d;
 document.querySelectorAll('.eml').forEach(function(el){
 var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.color='#3b82f6';a.style.textDecoration='none';el.replaceWith(a);});})();
 </script>
-<div class="verify-card">
-    <!-- Step 1: 번호 입력 -->
-    <div id="step1">
-      <div class="field-row">
-        <input id="phone" type="tel" placeholder="Phone number (e.g., +1 555 123 4567)" autocomplete="tel" inputmode="tel" />
-        <button class="btn-send" id="btn-send" type="button">Send Code</button>
-      </div>
-    </div>
-    <!-- Step 2: 코드 입력 -->
-    <div id="step2" style="display:none;">
-      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">A verification code has been sent to <strong id="sent-phone" style="color:var(--text-primary);"></strong></p>
-      <div class="field-row">
-        <input id="code" type="text" placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
-        <button class="btn-send" id="btn-verify" type="button">Verify</button>
-      </div>
-      <p style="margin-top:12px;font-size:13px;color:var(--text-muted);">Didn't receive it? <a href="#" id="btn-resend" style="color:var(--accent);text-decoration:none;">Resend code</a></p>
-    </div>
-    <!-- Step 3: 성공 -->
-    <div id="step3" style="display:none;">
-      <p style="font-size:15px;color:#10b981;font-weight:600;">✓ Phone number verified successfully.</p>
-      <p style="font-size:13px;color:var(--text-secondary);margin-top:8px;">You can now proceed with sign-up in the Tolja app.</p>
-    </div>
-    <div class="optin-text">
-      By entering your phone number and requesting a verification code, you consent to receive a
-      <strong>one-time SMS</strong> from Tolja for account authentication.
-      Message &amp; data rates may apply. Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for help.
-    </div>
-    <div class="support-line">Support: <span class="eml"></span></div>
-    <div class="toast" id="toast"></div>
-  </div>
+
+<!-- Verification logic -->
+<script>
+(function(){
+  var API='https://api.tolja.ai/api/auth';
+  var phoneInput=document.getElementById('phone');
+  var codeInput=document.getElementById('code');
+  var btnSend=document.getElementById('btn-send');
+  var btnVerify=document.getElementById('btn-verify');
+  var btnResend=document.getElementById('btn-resend');
+  var btnChange=document.getElementById('btn-change');
+  var toast=document.getElementById('toast');
+  var step1=document.getElementById('step1');
+  var step2=document.getElementById('step2');
+  var step3=document.getElementById('step3');
+  var sentPhone=document.getElementById('sent-phone');
+  var resendCooldown=0;
+  var resendTimer=null;
+
+  function showToast(msg,type){
+    toast.textContent=msg;
+    toast.className='toast show '+(type||'info');
+  }
+  function hideToast(){toast.className='toast';}
+
+  function setLoading(btn,loading){
+    btn.disabled=loading;
+    if(loading){
+      btn.dataset.origText=btn.textContent;
+      btn.textContent='...';
+    }else{
+      btn.textContent=btn.dataset.origText||btn.textContent;
+    }
+  }
+
+  function startResendCooldown(){
+    resendCooldown=30;
+    btnResend.classList.add('disabled');
+    btnResend.textContent='Resend ('+resendCooldown+'s)';
+    resendTimer=setInterval(function(){
+      resendCooldown--;
+      if(resendCooldown<=0){
+        clearInterval(resendTimer);
+        btnResend.classList.remove('disabled');
+        btnResend.textContent='Resend code';
+      }else{
+        btnResend.textContent='Resend ('+resendCooldown+'s)';
+      }
+    },1000);
+  }
+
+  async function sendCode(){
+    var v=phoneInput.value.trim();
+    if(!v){showToast('Please enter your phone number.','error');return;}
+    hideToast();
+    setLoading(btnSend,true);
+    try{
+      var r=await fetch(API+'/send-code',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({phone:v})
+      });
+      var d=await r.json();
+      if(d.success){
+        sentPhone.textContent=v;
+        step1.style.display='none';
+        step2.style.display='block';
+        codeInput.value='';
+        codeInput.focus();
+        showToast('Verification code sent. Check your phone.','info');
+        startResendCooldown();
+      }else{
+        showToast(d.message||'Failed to send code.','error');
+      }
+    }catch(e){
+      showToast('Network error. Please try again.','error');
+    }finally{setLoading(btnSend,false);}
+  }
+
+  async function verifyCode(){
+    var c=codeInput.value.trim();
+    if(!c||c.length<6){showToast('Please enter the 6-digit code.','error');return;}
+    hideToast();
+    setLoading(btnVerify,true);
+    try{
+      var r=await fetch(API+'/verify-code',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({phone:phoneInput.value.trim(),code:c})
+      });
+      var d=await r.json();
+      if(d.success){
+        step2.style.display='none';
+        step3.style.display='block';
+        showToast('Verification complete!','success');
+        if(resendTimer)clearInterval(resendTimer);
+      }else{
+        showToast(d.message||'Invalid code. Please try again.','error');
+        codeInput.value='';
+        codeInput.focus();
+      }
+    }catch(e){
+      showToast('Network error. Please try again.','error');
+    }finally{setLoading(btnVerify,false);}
+  }
+
+  function changeNumber(){
+    step2.style.display='none';
+    step1.style.display='block';
+    hideToast();
+    phoneInput.focus();
+    if(resendTimer)clearInterval(resendTimer);
+  }
+
+  btnSend.addEventListener('click',sendCode);
+  btnVerify.addEventListener('click',verifyCode);
+  btnResend.addEventListener('click',function(e){
+    e.preventDefault();
+    if(resendCooldown>0)return;
+    sendCode();
+  });
+  btnChange.addEventListener('click',function(e){e.preventDefault();changeNumber();});
+  phoneInput.addEventListener('keydown',function(e){if(e.key==='Enter')sendCode();});
+  codeInput.addEventListener('keydown',function(e){if(e.key==='Enter')verifyCode();});
+})();
+</script>
 </body>
 </html>
