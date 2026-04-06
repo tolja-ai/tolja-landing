@@ -138,7 +138,18 @@ var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.
 <script>
 (function(){
   var API='https://api.tolja.ai/api/auth';
+  var csrfToken='';
   var phoneInput=document.getElementById('phone');
+
+  // CSRF 토큰 가져오기
+  async function fetchCsrfToken(){
+    try{
+      var r=await fetch(API+'/csrf-token',{credentials:'include'});
+      var d=await r.json();
+      if(d.token) csrfToken=d.token;
+    }catch(e){console.error('CSRF fetch failed:',e);}
+  }
+  fetchCsrfToken();
   var codeInput=document.getElementById('code');
   var btnSend=document.getElementById('btn-send');
   var btnVerify=document.getElementById('btn-verify');
@@ -190,9 +201,10 @@ var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.
     hideToast();
     setLoading(btnSend,true);
     try{
-      var r=await fetch(API+'/send-code',{
+          var r=await fetch(API+'/send-code',{
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{'Content-Type':'application/json','X-CSRF-Token':csrfToken},
+        credentials:'include',
         body:JSON.stringify({phone:v})
       });
       var d=await r.json();
@@ -220,7 +232,8 @@ var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.
     try{
       var r=await fetch(API+'/verify-code',{
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{'Content-Type':'application/json','X-CSRF-Token':csrfToken},
+        credentials:'include',
         body:JSON.stringify({phone:phoneInput.value.trim(),code:c})
       });
       var d=await r.json();
