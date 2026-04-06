@@ -98,10 +98,35 @@
 document.querySelectorAll('.eml').forEach(function(el){
 var a=document.createElement('a');a.href='mai'+'lto:'+e;a.textContent=e;a.style.color='#3b82f6';a.style.textDecoration='none';el.replaceWith(a);});})();
 </script>
-<script>
-var btn=document.getElementById('btn'),phone=document.getElementById('phone'),toast=document.getElementById('toast');
-btn.addEventListener('click',function(){var v=phone.value.trim();if(!v){toast.textContent='Please enter your phone number to request a verification code.';toast.classList.add('show');return;}
-toast.innerHTML='Request recorded. During testing, OTP verification is completed within the Tolja app.<br><br>Reply STOP to opt out. Reply HELP for help.';toast.classList.add('show');});
-</script>
+<div class="verify-card">
+    <!-- Step 1: 번호 입력 -->
+    <div id="step1">
+      <div class="field-row">
+        <input id="phone" type="tel" placeholder="Phone number (e.g., +1 555 123 4567)" autocomplete="tel" inputmode="tel" />
+        <button class="btn-send" id="btn-send" type="button">Send Code</button>
+      </div>
+    </div>
+    <!-- Step 2: 코드 입력 -->
+    <div id="step2" style="display:none;">
+      <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">A verification code has been sent to <strong id="sent-phone" style="color:var(--text-primary);"></strong></p>
+      <div class="field-row">
+        <input id="code" type="text" placeholder="Enter 6-digit code" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
+        <button class="btn-send" id="btn-verify" type="button">Verify</button>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--text-muted);">Didn't receive it? <a href="#" id="btn-resend" style="color:var(--accent);text-decoration:none;">Resend code</a></p>
+    </div>
+    <!-- Step 3: 성공 -->
+    <div id="step3" style="display:none;">
+      <p style="font-size:15px;color:#10b981;font-weight:600;">✓ Phone number verified successfully.</p>
+      <p style="font-size:13px;color:var(--text-secondary);margin-top:8px;">You can now proceed with sign-up in the Tolja app.</p>
+    </div>
+    <div class="optin-text">
+      By entering your phone number and requesting a verification code, you consent to receive a
+      <strong>one-time SMS</strong> from Tolja for account authentication.
+      Message &amp; data rates may apply. Reply <strong>STOP</strong> to opt out. Reply <strong>HELP</strong> for help.
+    </div>
+    <div class="support-line">Support: <span class="eml"></span></div>
+    <div class="toast" id="toast"></div>
+  </div>
 </body>
 </html>
